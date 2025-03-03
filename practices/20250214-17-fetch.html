@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>fetch()</h1>
+    <input type="text" id="my_txt" value="5678" />
+    <button onclick="sendData()">送出</button>
+    <br />
+    <pre id="info"></pre>
+    <script>
+      const sendData = () => {
+        /*
+        fetch(`20250214-12-req-data.php?my_txt=${my_txt.value}`)
+          .then(function (response) {
+            // return response.text(); // 取得資料轉換成文字資料
+            return response.json(); // 取得資料後做 JSON.parse()
+          })
+          .then(function (result) {
+            console.log(result);
+            info.innerHTML = JSON.stringify(result, null, 4);
+          });
+          */
+        fetch(`20250214-12-req-data_.php?my_txt=${my_txt.value}`)
+          .then((r) => r.text())
+          .then((txt) => {
+            console.log(txt);
+            info.innerHTML = txt;
+          })
+          .catch((ex) => {
+            console.warn(ex);
+          });
+      };
+    </script>
+  </body>
+</html>

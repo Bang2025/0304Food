@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>upload - 1</h1>
+    <form name="form1" method="post" 
+      enctype="multipart/form-data"
+      onsubmit="event.preventDefault()"
+      >
+      <input type="text" name="account" value="5678" placeholder="帳號" />
+      <br />
+      <input type="file" name="avatar" multiple accept="image/png,image/jpeg"/>
+      <br />
+      <button>送出</button>
+    </form>
+
+  </body>
+</html>

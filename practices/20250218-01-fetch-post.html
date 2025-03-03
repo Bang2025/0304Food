@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>fetch(), post</h1>
+    <form name="form1" onsubmit="sendData(event)">
+      <input type="text" name="account" value="5678" placeholder="帳號" />
+      <br />
+      <input type="text" name="password" value="1234" placeholder="密碼" />
+      <br />
+      <button>送出</button>
+    </form>
+
+    <br />
+    <pre id="info"></pre>
+    <script>
+      const sendData = (e) => {
+        e.preventDefault(); // 不要讓表單以傳統的方式送出 (沒有要刷新頁面)
+
+        const fd = new FormData(document.form1); // 建立一個沒有外觀的表單
+
+        fetch(`20250214-12-req-data.php?my_txt=您好`, {
+          method: "POST",
+          body: fd, // Content-Type: multipart/form-data;
+        })
+          .then((r) => r.json())
+          .then((data) => {
+            console.log(data);
+            // 為輸出, 再轉換成 JSON 字串
+            info.innerHTML = JSON.stringify(data, null, 4);
+          })
+          .catch(console.warn);
+      };
+    </script>
+  </body>
+</html>

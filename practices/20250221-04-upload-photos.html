@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>upload - 多個檔案</h1>
+    <form name="form1" method="post" 
+      enctype="multipart/form-data"
+      action="20250221-02-files.php"
+      >
+      <!-- name 屬性值後面要加 [] 表示陣列 -->
+      <input type="file" name="photos[]" multiple accept="image/png,image/jpeg"/>
+      <br />
+      <button>上傳</button>
+    </form>
+
+  </body>
+</html>

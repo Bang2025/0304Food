@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="my_txt" value="5678" />
+    <button onclick="sendData()">送出</button>
+    <br />
+    <pre id="info"></pre>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      const sendData = () => {
+        $.get(
+          `20250214-12-req-data.php`,
+          { my_txt: my_txt.value },
+          function (data) {
+            console.log(data);
+
+            info.innerHTML = JSON.stringify(data, null, 4);
+          },
+          "json"
+        );
+      };
+    </script>
+  </body>
+</html>

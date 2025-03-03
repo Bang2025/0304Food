@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>測試 upload-photos.php API</h1>
+    <form name="addForm" method="post" onsubmit="return false">
+      <input type="text" name="name" placeholder="姓名" />
+
+
+      <h3 onclick="photos.click()">點擊多張圖片</h3>
+
+      <textarea name="my_photos" readonly rows="10" cols="80"></textarea>
+      <!--
+      <img src="" alt="" id="my_img" width="300" />
+      -->
+      <br />
+      <input type="text" name="nickname" placeholder="匿稱" />
+      <br />
+      <button>送出</button>
+    </form>
+
+    <form name="photosForm" hidden>
+      <input
+        type="file"
+        id="photos"
+        name="photos[]"
+        multiple
+        accept="image/png,image/jpeg"
+      />
+    </form>
+
+    <script>
+      const photos = document.querySelector("#photos");
+      const my_photos = document.addForm.my_photos; // 文字欄位
+
+      photos.addEventListener("change", (e) => {
+        if (!photos.files.length) {
+          // 沒選擇檔案
+
+          my_photos.value = "";
+          return;
+        }
+
+        const fd = new FormData(document.photosForm);
+
+        fetch("./../upload-photos.php", {
+          method: "POST",
+          body: fd,
+        })
+          .then((r) => r.json())
+          .then((obj) => {
+            console.log(obj);
+
+            if (obj.success) {
+              // my_photos.value = obj.files.toString(); // 轉字串
+              my_photos.value = JSON.stringify(obj.files); // 轉 JSON 字串
+
+
+              // my_img.src = `../images/${obj.file}`;
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

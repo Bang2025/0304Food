@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="my_txt" value="5678" />
+    <button onclick="sendData()">送出</button>
+    <br />
+    <pre id="info"></pre>
+    <script>
+      const sendData = () => {
+        // 使用同步的方式 Synchronous
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `20250214-12-req-data.php?my_txt=${my_txt.value}`, false);
+        xhr.send();
+        info.innerHTML = xhr.responseText;
+      };
+
+    </script>
+  </body>
+</html>

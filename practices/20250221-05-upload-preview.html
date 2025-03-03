@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>上傳前的預覽</h1>
+    <form
+      name="form1"
+      method="post"
+      enctype="multipart/form-data"
+      onsubmit="return false"
+    >
+      <input type="file" name="avatar" accept="image/png,image/jpeg" />
+      <br />
+      <img src="" alt="" id="preview" width="300" />
+      <br />
+      <button>上傳</button>
+    </form>
+    <script>
+      const avatar = document.form1.avatar;
+      const preview = document.querySelector("#preview");
+
+      avatar.addEventListener("change", (e) => {
+        if (avatar.files.length) {
+          // 同步的方式載入檔案的內容預覽
+          preview.src = URL.createObjectURL(avatar.files[0]);
+        } else {
+          preview.src = "";
+        }
+      });
+
+      // homework: 用戶選多個檔案時, 如何做預覽
+    </script>
+  </body>
+</html>

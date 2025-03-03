@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>測試 upload-avatar.php API</h1>
+    <form name="addForm" method="post" onsubmit="return false">
+      <input type="text" name="name" placeholder="姓名">
+      <h3 onclick="avatar.click()">點擊上傳頭貼</h3>
+
+      <input type="hidden" name="my_avatar" />
+      <img src="" alt="" id="my_img" width="300" />
+
+      <br>
+      <input type="text" name="nickname" placeholder="匿稱">
+      <br>
+      <button>送出</button>
+    </form>
+
+    <form name="form1" hidden>
+      <input type="file" name="avatar" accept="image/png,image/jpeg" />
+    </form>
+
+    <script>
+      const avatar = document.form1.avatar;
+      const my_avatar = document.addForm.my_avatar;
+
+      avatar.addEventListener("change", (e) => {
+        if (!avatar.files.length) {
+          // 沒選擇檔案
+          my_img.src = ``;
+          my_avatar.value = '';
+          return;
+        }
+
+        const fd = new FormData(document.form1);
+
+        fetch("./../upload-avatar.php", {
+          method: "POST",
+          body: fd,
+        })
+          .then((r) => r.json())
+          .then((obj) => {
+            console.log(obj);
+            
+            if (obj.success && obj.file) {
+              my_avatar.value = obj.file;
+              my_img.src = `../images/${obj.file}`;
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

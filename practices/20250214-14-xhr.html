@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="my_txt" value="5678" />
+    <button onclick="sendData()">送出</button>
+    <br />
+    <pre id="info"></pre>
+    <script>
+      const sendData = () => {
+        // 1.
+        const xhr = new XMLHttpRequest();
+        // 2. 定義事件處理器
+        xhr.onload = () => {
+          info.innerHTML = xhr.responseText;
+        };
+        xhr.onreadystatechange = (e) => {
+          // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState
+
+          const {readyState, status} = xhr;
+
+          console.log({readyState, status});
+          /*
+          1 
+          2 收到檔頭, 收到狀態碼
+          3 正在下載資料
+          4 完成成
+          */
+        };
+        // 3. 設定 (使用非同步 [異步] 的方式 Asynchronous)
+        xhr.open("GET", `20250214-12-req-data.php?my_txt=${my_txt.value}`);
+        // 4. 發送
+        xhr.send();
+      };
+    </script>
+  </body>
+</html>

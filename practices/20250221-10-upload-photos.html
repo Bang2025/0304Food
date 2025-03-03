@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .card {
+        display: inline-block;
+        width: 200px;
+        border: 1px solid gray;
+      }
+      .card img {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>測試 upload-photos.php API</h1>
+    <form name="addForm" method="post" onsubmit="return false">
+      <input type="text" name="name" placeholder="姓名" />
+
+      <h3 onclick="photos.click()">點擊多張圖片</h3>
+
+      <textarea name="my_photos" readonly rows="10" cols="80"></textarea>
+      <div id="img_container">
+        <!--
+        <div class="card">
+          <img src="../images/14bf8c18d5ffcab0b54e2feb973415e422e04742.jpg" alt="" />
+        </div>
+        <div class="card">
+          <img src="../images/ca79d8288a9e3daddf3e4b5ac179bc3ecc793c2c.jpg" alt="" />
+        </div>
+        <div class="card">
+          <img src="../images/724099fa548fef0f02598fc01a0b0a167ed48652.jpg" alt="" />
+        </div>
+        -->
+      </div>
+      <br />
+      <input type="text" name="nickname" placeholder="匿稱" />
+      <br />
+      <button>送出</button>
+    </form>
+
+    <form name="photosForm" hidden>
+      <input
+        type="file"
+        id="photos"
+        name="photos[]"
+        multiple
+        accept="image/png,image/jpeg"
+      />
+    </form>
+
+    <script>
+      const img_container = document.querySelector("#img_container");
+      const photos = document.querySelector("#photos");
+      const my_photos = document.addForm.my_photos; // 文字欄位
+
+      const getCardHTML = (src) => {
+        return `
+        <div class="card">
+          <img src="../images/${src}" alt="" />
+        </div>
+        `;
+      };
+      photos.addEventListener("change", (e) => {
+        if (!photos.files.length) {
+          // 沒選擇檔案
+
+          my_photos.value = "";
+          return;
+        }
+
+        const fd = new FormData(document.photosForm);
+
+        fetch("./../upload-photos.php", {
+          method: "POST",
+          body: fd,
+        })
+          .then((r) => r.json())
+          .then((obj) => {
+            console.log(obj);
+
+            if (obj.success) {
+              // my_photos.value = obj.files.toString(); // 轉字串
+              my_photos.value = JSON.stringify(obj.files); // 轉 JSON 字串
+
+              let str = "";
+              for (let f of obj.files) {
+                str += getCardHTML(f);
+              }
+              img_container.innerHTML = str;
+            }
+          });
+      });
+      // ["14bf8c18d5ffcab0b54e2feb973415e422e04742.jpg","ca79d8288a9e3daddf3e4b5ac179bc3ecc793c2c.jpg","724099fa548fef0f02598fc01a0b0a167ed48652.jpg"]
+    </script>
+  </body>
+</html>
