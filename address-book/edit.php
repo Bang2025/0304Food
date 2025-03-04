@@ -10,12 +10,33 @@ $title = '編輯通訊錄';
 $table = isset($_GET['table']) ? $_GET['table'] : '';
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// 安全性檢查
-$allowed_tables = ['recipes', 'users', 'categories'];
-if (!in_array($table, $allowed_tables) || $id <= 0) {
-    header('Location: list-content-admin.php');
-    exit;
-}
+// 安全性檢查 - 擴展允許訪問的表格列表
+$allowed_tables = [
+    'carts',
+    'categories',
+    'chatmessages',
+    'contactus',
+    'food_products',
+    'ingredients',
+    'members',
+    'orders',
+    'order_items',
+    'product_reviews',
+    'qanda',
+    'recipes',
+    'recipe_categories',
+    'recipe_images',
+    'recipe_tags',
+    'steps',
+    'tags',
+    'users'
+  ];
+  
+  
+  if (!in_array($table, $allowed_tables)) {
+      header('Location: list-content-admin.php');
+      exit;
+  }
 
 // 獲取表格結構
 $stmt = $pdo->prepare("DESCRIBE {$table}");

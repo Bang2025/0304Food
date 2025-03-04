@@ -7,6 +7,13 @@
 // $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
 
 require __DIR__ . "/parts/db-connect.php"; 
+?>
+
+<?php include __DIR__ . '/parts/html-head.php' ?>
+
+<?php include __DIR__ . '/parts/html-navbar.php' ?>
+
+<?php
 
 
 // 獲取要查詢的資料表 (默認為 recipes) 。 使用isset的用意為防止SQL惡意攻擊 (因為會先判斷是否存在這個變數)
@@ -261,5 +268,7 @@ $page_title = isset($table_titles[$table]) ? $table_titles[$table] : '資料管�
             }
         }
     </script>
+
+<?php include __DIR__ . '/parts/html-scripts.php' ?>
 </body>
-</html>
+<?php include __DIR__ . '/parts/html-tail.php' ?>
